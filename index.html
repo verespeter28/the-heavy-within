@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>The Heavy Within</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #080808;
+            color: #e5e5e5;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           HLAVIČKA
+        ========================= */
+
+        header {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    rgba(0,0,0,0.78),
+                    rgba(0,0,0,0.93)
+                ),
+                radial-gradient(
+                    circle at center,
+                    #420000 0%,
+                    #150000 35%,
+                    #080808 75%
+                );
+        }
+
+        /* LOGO */
+
+        .logo {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+
+            color: #d00000;
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+
+            z-index: 10;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        /* TLAČIDLO MENU */
+
+        .menu-button {
+            position: absolute;
+            top: 75px;
+            right: 40px;
+
+            background: transparent;
+            border: 1px solid #b00000;
+            color: white;
+
+            padding: 10px 20px;
+
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+
+            transition: 0.3s;
+            z-index: 20;
+        }
+
+        .menu-button:hover {
+            background: #a00000;
+        }
+
+        /* MENU */
+
+        nav {
+            position: absolute;
+            top: 120px;
+            right: 40px;
+
+            width: 250px;
+
+            background: rgba(8,8,8,0.98);
+            border: 1px solid #8b0000;
+
+            display: none;
+            z-index: 15;
+        }
+
+        nav.active {
+            display: block;
+        }
+
+        nav a {
+            display: block;
+
+            padding: 15px 20px;
+
+            color: white;
+            text-decoration: none;
+
+            border-bottom: 1px solid #222;
+
+            transition: 0.3s;
+        }
+
+        nav a:last-child {
+            border-bottom: none;
+        }
+
+        nav a:hover {
+            background: #8b0000;
+            padding-left: 28px;
+        }
+
+        /* =========================
+           HLAVNÝ ÚVOD
+        ========================= */
+
+        .hero {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .hero h1 {
+            font-size: clamp(50px, 9vw, 110px);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+
+            color: white;
+
+            text-shadow:
+                0 0 10px #900000,
+                0 0 30px #400000;
+        }
+
+        .hero h1 span {
+            color: #c40000;
+        }
+
+        .hero-line {
+            width: 120px;
+            height: 3px;
+            background: #c00000;
+            margin: 30px auto;
+        }
+
+        .hero p {
+            color: #aaa;
+            font-size: 18px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* =========================
+           VŠEOBECNÉ SEKCIE
+        ========================= */
+
+        section {
+            padding: 100px 8%;
+            border-top: 1px solid #1c1c1c;
+        }
+
+        .section-title {
+            font-size: 42px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 50px;
+        }
+
+        .section-title span {
+            color: #c00000;
+        }
+
+        /* =========================
+           HLAVNÝ ČLÁNOK
+        ========================= */
+
+        .featured {
+            max-width: 1000px;
+            margin: auto;
+
+            background: #101010;
+            border: 1px solid #2a2a2a;
+
+            padding: 50px;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured::before {
+            content: "";
+
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            width: 5px;
+            height: 100%;
+
+            background: #b00000;
+        }
+
+        .featured-label {
+            color: #c00000;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .featured h3 {
+            font-size: 40px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .featured p {
+            color: #aaa;
+            max-width: 800px;
+            font-size: 18px;
+        }
+
+        .read-more {
+            display: inline-block;
+            margin-top: 25px;
+
+            color: white;
+            border: 1px solid #a00000;
+
+            padding: 10px 20px;
+
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+
+            transition: 0.3s;
+        }
+
+        .read-more:hover {
+            background: #a00000;
+        }
+
+        /* =========================
+           KARTY
+        ========================= */
+
+        .cards {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(260px, 1fr));
+
+            gap: 25px;
+        }
+
+        .card {
+            background: #111;
+
+            border: 1px solid #252525;
+
+            padding: 30px;
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+
+            border-color: #a00000;
+
+            box-shadow:
+                0 10px 30px rgba(120,0,0,0.25);
+        }
+
+        .card h3 {
+            color: white;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: #aaa;
+        }
+
+        .date {
+            color: #b00000;
+            font-size: 13px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        /* =========================
+           TEXTY A VÝZNAM
+        ========================= */
+
+        .meaning {
+            max-width: 1000px;
+            margin: auto;
+
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+
+            gap: 25px;
+        }
+
+        .meaning-box {
+            background: #101010;
+            border-top: 3px solid #a00000;
+
+            padding: 30px;
+        }
+
+        .meaning-box h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 23px;
+        }
+
+        .meaning-box p {
+            color: #aaa;
+        }
+
+        /* =========================
+           KAPELY
+        ========================= */
+
+        .band {
+            margin-bottom: 25px;
+
+            background: #101010;
+
+            border-left: 4px solid #a00000;
+
+            padding: 25px;
+
+            transition: 0.3s;
+        }
+
+        .band:hover {
+            background: #151515;
+            transform: translateX(5px);
+        }
+
+        .band h3 {
+            color: white;
+            font-size: 24px;
+        }
+
+        .band p {
+            color: #999;
+            margin-top: 8px;
+        }
+
+        /* =========================
+           O MNE
+        ========================= */
+
+        .about {
+            max-width: 850px;
+            color: #bbb;
+            font-size: 18px;
+        }
+
+        .about strong {
+            color: white;
+        }
+
+        /* =========================
+           PÄTIČKA
+        ========================= */
+
+        footer {
+            text-align: center;
+
+            padding: 40px;
+
+            background: #050505;
+
+            color: #666;
+
+            border-top: 1px solid #1b1b1b;
+        }
+
+        footer strong {
+            color: #b00000;
+        }
+
+        /* =========================
+           MOBIL
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .logo {
+                right: 20px;
+                top: 20px;
+                font-size: 18px;
+            }
+
+            .menu-button {
+                right: 20px;
+                top: 60px;
+            }
+
+            nav {
+                right: 20px;
+                top: 105px;
+            }
+
+            .hero p {
+                font-size: 12px;
+                letter-spacing: 2px;
+            }
+
+            section {
+                padding: 70px 20px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .featured {
+                padding: 35px 25px;
+            }
+
+            .featured h3 {
+                font-size: 30px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     ÚVOD
+========================= -->
+
+<header>
+
+    <!-- LOGO VPRAVO HORE -->
+
+    <div class="logo">
+        THE <span>HEAVY</span> WITHIN
+    </div>
+
+
+    <!-- MENU -->
+
+    <button
+        class="menu-button"
+        onclick="toggleMenu()">
+
+        Menu ☰
+
+    </button>
+
+
+    <nav id="navigation">
+
+        <a href="#novinky" onclick="closeMenu()">
+            Novinky
+        </a>
+
+        <a href="#recenzie" onclick="closeMenu()">
+            Recenzie
+        </a>
+
+        <a href="#texty" onclick="closeMenu()">
+            Texty a význam
+        </a>
+
+        <a href="#kapely" onclick="closeMenu()">
+            Kapely
+        </a>
+
+        <a href="#omne" onclick="closeMenu()">
+            O mne
+        </a>
+
+    </nav>
+
+
+    <!-- HLAVNÝ NÁPIS -->
+
+    <div class="hero">
+
+        <h1>
+            THE <span>HEAVY</span> WITHIN
+        </h1>
+
+        <div class="hero-line"></div>
+
+        <p>
+            Metal • Hudba • Myšlienky
+        </p>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     NOVINKY
+========================= -->
+
+<section id="novinky">
+
+    <h2 class="section-title">
+        <span>Metalové</span> novinky
+    </h2>
+
+
+    <!-- HLAVNÝ ČLÁNOK -->
+
+    <article class="featured">
+
+        <div class="featured-label">
+            Hlavný článok
+        </div>
+
+        <h3>
+            Novinky zo sveta metalu
+        </h3>
+
+        <p>
+            Najnovšie správy o kapelách, pripravovaných
+            albumoch, nových skladbách, videoklipoch,
+            koncertoch a dianí na metalovej scéne.
+        </p>
+
+        <a href="#" class="read-more">
+            Čítať článok
+        </a>
+
+    </article>
+
+
+    <br><br><br>
+
+
+    <!-- MENŠIE ČLÁNKY -->
+
+    <div class="cards">
+
+        <article class="card">
+
+            <div class="date">
+                15. september 2026
+            </div>
+
+            <h3>
+                Nový album na obzore
+            </h3>
+
+            <p>
+                Kapela oznámila pripravovaný album
+                a zverejnila prvý singel.
+            </p>
+
+        </article>
+
+
+        <article class="card">
+
+            <div class="date">
+                12. september 2026
+            </div>
+
+            <h3>
+                Nový singel je vonku
+            </h3>
+
+            <p>
+                Nová skladba prináša ďalší pohľad
+                na smerovanie kapely.
+            </p>
+
+        </article>
+
+
+        <article class="card">
+
+            <div class="date">
+                10. september 2026
+            </div>
+
+            <h3>
+                Čo sa deje na scéne?
+            </h3>
+
+            <p>
+                Výber zaujímavých udalostí,
+                ktoré momentálne hýbu metalovým svetom.
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     RECENZIE
+========================= -->
+
+<section id="recenzie">
+
+    <h2 class="section-title">
+        <span>Albumové</span> recenzie
+    </h2>
+
+
+    <div class="cards">
+
+        <article class="card">
+
+            <div class="date">
+                Recenzia albumu
+            </div>
+
+            <h3>
+                Kapela — Názov albumu
+            </h3>
+
+            <p>
+                Atmosféra, produkcia, skladby,
+                výkony jednotlivých členov a celkový
+                dojem z albumu.
+            </p>
+
+            <a href="#" class="read-more">
+                Prečítať recenziu
+            </a>
+
+        </article>
+
+
+        <article class="card">
+
+            <div class="date">
+                Recenzia albumu
+            </div>
+
+            <h3>
+                Ďalší album
+            </h3>
+
+            <p>
+                Čo album prináša, čo funguje,
+                čo nefunguje a komu by sa mohol páčiť.
+            </p>
+
+            <a href="#" class="read-more">
+                Prečítať recenziu
+            </a>
+
+        </article>
+
+
+        <article class="card">
+
+            <div class="date">
+                Recenzia albumu
+            </div>
+
+            <h3>
+                Nová nahrávka
+            </h3>
+
+            <p>
+                Pohľad na hudbu, texty, emócie
+                a celkovú identitu albumu.
+            </p>
+
+            <a href="#" class="read-more">
+                Prečítať recenziu
+            </a>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     TEXTY A VÝZNAM
+========================= -->
+
+<section id="texty">
+
+    <h2 class="section-title">
+        <span>Texty</span> a význam
+    </h2>
+
+
+    <div class="meaning">
+
+
+        <article class="meaning-box">
+
+            <h3>
+                Čo sa skrýva za textom?
+            </h3>
+
+            <p>
+                Rozbory textov metalových kapiel,
+                ich symboliky, tém a myšlienok.
+            </p>
+
+        </article>
+
+
+        <article class="meaning-box">
+
+            <h3>
+                Témy a príbehy
+            </h3>
+
+            <p>
+                Smrť, identita, strach, spoločnosť,
+                vzťahy, existencia, nádej a ďalšie
+                témy, ktoré metal prináša.
+            </p>
+
+        </article>
+
+
+        <article class="meaning-box">
+
+            <h3>
+                Hudba pod povrchom
+            </h3>
+
+            <p>
+                Nie iba to, ako skladba znie,
+                ale aj čo sa nám snaží povedať.
+            </p>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     KAPELY
+========================= -->
+
+<section id="kapely">
+
+    <h2 class="section-title">
+        <span>Kapely</span> a diskografie
+    </h2>
+
+
+    <div class="band">
+
+        <h3>
+            Spiritbox
+        </h3>
+
+        <p>
+            Diskografia • Albumy • EP • Single
+        </p>
+
+    </div>
+
+
+    <div class="band">
+
+        <h3>
+            Bring Me The Horizon
+        </h3>
+
+        <p>
+            Diskografia • Albumy • EP • Single
+        </p>
+
+    </div>
+
+
+    <div class="band">
+
+        <h3>
+            Every Time I Die
+        </h3>
+
+        <p>
+            Diskografia • Albumy • História kapely
+        </p>
+
+    </div>
+
+
+    <div class="band">
+
+        <h3>
+            Ďalšie kapely
+        </h3>
+
+        <p>
+            Postupne pribúdajú ďalšie kapely a ich diskografie.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     O MNE
+========================= -->
+
+<section id="omne">
+
+    <h2 class="section-title">
+        <span>O</span> mne
+    </h2>
+
+
+    <div class="about">
+
+        <p>
+            <strong>The Heavy Within</strong>
+            je osobný blog venovaný metalovej hudbe,
+            kapelám, albumom a myšlienkam ukrytým
+            za hudbou.
+        </p>
+
+
+        <br>
+
+
+        <p>
+            Nájdeš tu metalové novinky, recenzie albumov,
+            diskografie kapiel a rozbory textov.
+        </p>
+
+
+        <br>
+
+
+        <p>
+            Nejde iba o to, či je album technicky dobrý.
+            Dôležité je aj to, čo v človeku zanechá.
+        </p>
+
+
+        <br>
+
+
+        <p>
+            Pretože niekedy je najťažšia časť hudby
+            práve to, čo zostáva
+            <strong>within</strong>.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     PÄTIČKA
+========================= -->
+
+<footer>
+
+    © 2026
+    <strong>The Heavy Within</strong>
+
+    <br>
+
+    Metal • Hudba • Myšlienky
+
+</footer>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+    function toggleMenu() {
+
+        const menu =
+            document.getElementById("navigation");
+
+        menu.classList.toggle("active");
+
+    }
+
+
+    function closeMenu() {
+
+        const menu =
+            document.getElementById("navigation");
+
+        menu.classList.remove("active");
+
+    }
+
+</script>
+
+
+</body>
+</html>
