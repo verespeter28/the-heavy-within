@@ -1,0 +1,53 @@
+backend:
+  name: github
+  repo: verespeter28/the-heavy-within
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "novinky"
+    label: "Novinky"
+    folder: "posts/novinky"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Názov", name: "title", widget: "string"}
+      - {label: "Dátum", name: "date", widget: "datetime"}
+      - {label: "Obrázok", name: "image", widget: "image", required: false}
+      - {label: "Text", name: "body", widget: "markdown"}
+
+  - name: "recenzie"
+    label: "Recenzie"
+    folder: "posts/recenzie"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Názov", name: "title", widget: "string"}
+      - {label: "Album", name: "album", widget: "string"}
+      - {label: "Hodnotenie", name: "rating", widget: "number", value_type: "float", min: 0, max: 10}
+      - {label: "Obrázok", name: "image", widget: "image", required: false}
+      - {label: "Recenzia", name: "body", widget: "markdown"}
+
+  - name: "texty"
+    label: "Texty a význam"
+    folder: "posts/texty"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Názov", name: "title", widget: "string"}
+      - {label: "Kapela", name: "band", widget: "string"}
+      - {label: "Skladba", name: "song", widget: "string"}
+      - {label: "Obrázok", name: "image", widget: "image", required: false}
+      - {label: "Analýza", name: "body", widget: "markdown"}
+
+  - name: "kapely"
+    label: "Kapely"
+    folder: "posts/kapely"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Názov kapely", name: "title", widget: "string"}
+      - {label: "Obrázok", name: "image", widget: "image", required: false}
+      - {label: "Informácie", name: "body", widget: "markdown"}
